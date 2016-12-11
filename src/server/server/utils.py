@@ -16,6 +16,11 @@ def json_abort(code, text):
     }
     abort(make_response(jsonify(json), code))
 
+def allowed_file(filename):
+    ''' return whether it's an allowed type or not '''
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in app.config.get('ALLOWED_EXTENSIONS',[])
+
  # --------------------
  # ---  DECORATORS  ---
  # --------------------

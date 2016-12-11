@@ -52,7 +52,9 @@ app.controller('taskCtrl', function($scope, $window, $timeout, $filter, ApiServi
     $('#modal' + $scope.task.id).modal('close');
     TaskService.updateTask($scope.task, $scope.task.list)
       .catch(function () {
-        shake(document.getElementById(task.id));
+        try {
+          shake(document.getElementById(task.id));
+        } catch (e) {}
       });
   }
 
@@ -83,21 +85,21 @@ app.controller('taskCtrl', function($scope, $window, $timeout, $filter, ApiServi
     }
   }
 
-  // $scope.uploadFiles = function(files) {
-  //   TaskService.uploadFiles($scope.task, $scope.task.list, files)
-  //     .catch(function () {
-  //       shake(document.getElementById('modal' + $scope.task.id));
-  //     });
-  // }
+  $scope.uploadFiles = function(files) {
+    TaskService.uploadFiles($scope.task, $scope.task.list, files)
+      .catch(function () {
+        shake(document.getElementById('modal' + $scope.task.id));
+      });
+  }
 
-  // $scope.removeFile = function(file) {
-  //   TaskService.removeFile($scope.task, $scope.task.list, file);
-  // }
+  $scope.removeFile = function(file) {
+    TaskService.removeFile($scope.task, $scope.task.list, file);
+  }
 
-    // $scope.downloadFile = function(file) {
-    //   var location = TaskService.fileLocation($scope.task, $scope.task.list, file);
-    //   if (location) {
-    //     $window.open(location);
-    //   }
-    // }
+    $scope.downloadFile = function(file) {
+      var location = TaskService.fileLocation($scope.task, $scope.task.list, file);
+      if (location) {
+        $window.open(location);
+      }
+    }
 });
