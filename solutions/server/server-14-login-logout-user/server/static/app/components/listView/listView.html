@@ -1,0 +1,46 @@
+  <div class="collection" style="border-style: none;">
+    <div ng-repeat="list in TaskService.lists | filter:{inbox:true}">
+      <list-element list="list"></list-element>
+    </div>
+    <div>
+      <list-element hide ng-show="TaskService.todayList.tasks.length>0" list="TaskService.todayList"></list-element>
+    </div>
+    <div>
+      <list-element hide ng-show="TaskService.weekList.tasks.length>0" list="TaskService.weekList"></list-element>
+    </div>
+    <div ng-repeat="list in TaskService.lists | filter:{inbox:false}">
+      <list-element list="list"></list-element>
+    </div>
+  </div>
+
+  <div class="collection" style="border-style: none;">
+      <a class="clickable nonselectable" ng-click="showCreateListModal()" >
+        <div class="list-title" style="width:100%; color: #153d77; font-size: 16px;">
+          <svg viewBox="0 0 25 25">
+            <use xlink:href="/assets/icons/plus.svg#icon-1"></use>
+          </svg>
+          <span class="nonselectable">Create List</span>
+        </div>
+      </a>
+  </div>
+
+  <form id="createListModal"  ng-submit="createList()" class="modal list create modal-fixed-footer">
+
+    <div class="create-list-wrapper">
+      <div class="row">
+          <div class="task-header valign-wrapper col s12 row">
+              <div class="card-title">Create New List</div>
+          </div>
+      </div>
+      <div class="row modal-body">
+          <div class="input-field col s12">
+              <input type="text" autocomplete="off" placeholder="Title" ng-model="newList.title" >
+          </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-action waves-effect waves-blue btn-flat" ng-click="createList()">Save</a>
+      <a class="modal-action modal-close waves-effect waves-blue btn-flat">Cancel</a>
+    </div >
+
+  </form>
