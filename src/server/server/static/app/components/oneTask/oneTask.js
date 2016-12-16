@@ -52,9 +52,7 @@ app.controller('taskCtrl', function($scope, $window, $timeout, $filter, ApiServi
     $('#modal' + $scope.task.id).modal('close');
     TaskService.updateTask($scope.task, $scope.task.list)
       .catch(function () {
-        try {
-          shake(document.getElementById(task.id));
-        } catch (e) {}
+        shake(document.getElementById(task.id));
       });
   }
 

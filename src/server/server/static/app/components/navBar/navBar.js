@@ -10,9 +10,10 @@ app.directive('navBar', function() {
     };
 });
 
-app.controller('navBarCtrl', function($scope, $timeout, TaskService) {
+app.controller('navBarCtrl', function($scope, $timeout, AuthService, TaskService) {
 
   $scope.TaskService = TaskService;
+  $scope.AuthService = AuthService;
 
   $scope.$watch('$viewContentLoaded', function(){
     $timeout(function(){

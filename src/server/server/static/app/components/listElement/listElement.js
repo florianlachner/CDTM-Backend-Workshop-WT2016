@@ -9,7 +9,7 @@ app.directive('listElement', function() {
     };
 });
 
-app.controller('listElementCtrl', function($scope, $http, $location, $window, $timeout, ApiService, TaskService) {
+app.controller('listElementCtrl', function($scope, $http, $location, $window, $timeout, AuthService, ApiService, TaskService) {
 
   var loadingIcon = '<img src="assets/icons/loading2.svg"></img>';
   var verifiedIcon = '<img src="assets/icons/check.svg"></img>';
@@ -186,11 +186,10 @@ app.controller('listElementCtrl', function($scope, $http, $location, $window, $t
   };
 
   $scope.isOwner = function() {
-    // var user = AuthService.getUser();
-    // if (user && user.id === $scope.list.owner)
-    //   return true;
-    // return false;
-    return true
+    var user = AuthService.getUser();
+    if (user && user.id === $scope.list.owner)
+      return true;
+    return false;
   }
 
   $scope.isEditable = function() {
@@ -213,15 +212,15 @@ app.controller('listElementCtrl', function($scope, $http, $location, $window, $t
   };
 
   $scope.leaveList = function () {
-    // if ($scope.isOwner()) return shake(document.getElementById('listModal' + $scope.list.id));
-    //
-    // TaskService.leaveList($scope.list.id, AuthService.getUser().id)
-    //   .then(function() {
-    //     $('#listModal' + $scope.list.id).modal('close');;
-    //   })
-    //   .catch(function () {
-    //     shake(document.getElementById('listModal' + $scope.list.id));
-    //   });
+    if ($scope.isOwner()) return shake(document.getElementById('listModal' + $scope.list.id));
+
+    TaskService.leaveList($scope.list.id, AuthService.getUser().id)
+      .then(function() {
+        $('#listModal' + $scope.list.id).modal('close');;
+      })
+      .catch(function () {
+        shake(document.getElementById('listModal' + $scope.list.id));
+      });
   };
 
 });

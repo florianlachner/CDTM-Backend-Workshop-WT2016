@@ -12,8 +12,10 @@
         <li hide ng-show="AuthService.isLoggedIn()" class="text-primary" style="font-size: 18px; text-transform: capitalize; margin-right:20px;">
           <img src="assets/icons/user.svg" width="45" style="vertical-align:middle;"/> {{AuthService.getUser().email.split('.')[0]}}
         </li>
-        <li><a href="/" class="primary waves-effect waves-light btn">My Tasks</a></li>
-        <li><a href="/logout" class="text-primary white waves-effect waves-light btn">Logout</a></li>
+        <li hide ng-show="AuthService.isLoggedIn()"><a href="/" class="primary waves-effect waves-light btn">My Tasks</a></li>
+        <li hide ng-show="AuthService.isLoggedIn()"><a href="/logout" class="text-primary white waves-effect waves-light btn">Logout</a></li>
+        <li hide ng-show="!AuthService.isLoggedIn()"><a href="/register" class="primary waves-effect waves-light btn">Register</a></li>
+        <li hide ng-show="!AuthService.isLoggedIn()"><a href="/login" class="text-primary white waves-effect waves-light btn">Login</a></li>
     </ul>
   </div>
 </nav>
@@ -24,9 +26,16 @@
       <div style="margin-bottom: 20px;">
         <a href="/home" target="_blank"><img width="140" src="/assets/CDTM_color.png" alt="CDTM" style="vertical-align:middle;" /><span class="text-primary" style="font-size:25px;"> Tasks</span></a>
       </div>
+
       <!-- if not logged in -->
+      <li hide ng-show="!AuthService.isLoggedIn()"><a href="/register" class="primary waves-effect waves-light btn">Register</a></li>
+      <li hide ng-show="!AuthService.isLoggedIn()"><a href="/login" class="text-primary white waves-effect waves-light btn">Login</a></li>
       <!-- if logged in -->
-      <list-view></list-view>
+      <li hide ng-show="AuthService.isLoggedIn()">
+        <img src="assets/icons/user.svg" width="30" style="vertical-align:middle; margin-left: 10px;"/>
+        {{AuthService.getUser().email.split('.')[0]}}
+      </li>
+      <list-view hide ng-show="AuthService.isLoggedIn()"></list-view>
     </div>
 
     <div class="" style="width: 100%; min-height:10%; margin: 0; overflow: auto; ">

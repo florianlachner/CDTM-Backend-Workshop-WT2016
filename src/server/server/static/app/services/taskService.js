@@ -39,7 +39,6 @@ app.factory('TaskService', function($q, $http, ApiService) {
                  if (newList.inbox) selectList(newList);
                }
              });
-             if (!(selectedList) && lists.length > 0) selectList(lists[0]);
              deferred.resolve();
            },
            function(response){

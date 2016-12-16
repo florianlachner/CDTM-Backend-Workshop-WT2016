@@ -1,10 +1,10 @@
-from flask import abort, jsonify, make_response, request
+from flask import abort, jsonify, make_response, request, session
 
 from functools import wraps
 import re
 
 from server import *
-from server.database import db_list_exists
+from server.database import *
 
 def json_abort(code, text):
     json = {
@@ -51,6 +51,32 @@ def list_exists(f):
     def decorated_function(*args, **kwargs):
         list_id = kwargs.get('list_id')
         if not db_list_exists(list_id):
+            json_abort(404, 'List not found')
+        return f(*args, **kwargs)
+    return decorated_function
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get('logged_in'):
+            json_abort(401, 'Login required')
+        return f(*args, **kwargs)
+    return decorated_function
+
+def list_access(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        list_id = kwargs.get('list_id')
+        if not db_has_access_to_list(list_id, session.get('userID')):
+            json_abort(404, 'List not found')
+        return f(*args, **kwargs)
+    return decorated_function
+
+def list_owner(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        list_id = kwargs.get('list_id')
+        if not db_is_list_owner(list_id, session.get('userID')):
             json_abort(404, 'List not found')
         return f(*args, **kwargs)
     return decorated_function
