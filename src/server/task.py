@@ -1,5 +1,9 @@
 class Task():
-    def __init__(self, id, title, status, description, due, revision):
+
+    NORMAL = 'normal'
+    COMPLETED = 'completed'
+
+    def __init__(self, title, list, id='', status=NORMAL, description='', due='', revision=1):
         self.id = id
         self.title = title
         self.status = status

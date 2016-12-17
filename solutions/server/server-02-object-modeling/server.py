@@ -30,4 +30,4 @@ def frontEnd():
     return send_file('static/index.html')
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=20002, debug=True)
+    app.run(host='localhost', port=20003, debug=True)
