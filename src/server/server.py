@@ -3,6 +3,8 @@
 
 from flask import Flask
 import sys
+from list import List
+from task import Task
 
 # allow special characters (e.g. üäö ...)
 reload(sys)
