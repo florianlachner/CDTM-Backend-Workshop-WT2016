@@ -88,5 +88,22 @@ def create_task(list_id):
     # 5. return new task
     return jsonify(newTask.__dict__)
 
+# DESTROY ROUTE
+@app.route('/api/lists/<string:list_id>/tasks/<string:task_id>', methods=['DELETE'])
+def remove_task(list_id, task_id):
+    # 1. Check whether the specified list exists
+    if (len([l for l in myLists if l.id == list_id]) < 1):
+        json_abort(404, 'List not found')
+
+    # 2. Check whether the specified task exists
+    tasks = [t for t in myTasks if t.id == task_id and t.list == list_id]
+    if (len(tasks) < 1):
+        json_abort(404, 'Task not found')
+
+    # 3. finally remove the task
+    myTasks.remove(tasks[0])
+
+    return jsonify({'result': True})
+
 if __name__ == '__main__':
-    app.run(host='localhost', port=20004, debug=True)
+    app.run(host='localhost', port=20005, debug=True)
