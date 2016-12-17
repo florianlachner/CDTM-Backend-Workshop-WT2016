@@ -105,5 +105,38 @@ def remove_task(list_id, task_id):
 
     return jsonify({'result': True})
 
+# UDPATE ROUTE
+
+@app.route('/api/lists/<string:list_id>/tasks', methods=['PUT'])
+def update_task(list_id):
+    ''' creates a new task for a list '''
+
+    # 1. Check whether the specified list exists
+    if (len([l for l in myLists if l.id == list_id]) < 1):
+        json_abort(404, 'List not found')
+
+    # 2. Check whether the required parameters have been sent
+    try:
+         data = request.get_json()
+    except:
+        json_abort(400, 'No JSON provided')
+
+    if data == None:
+        json_abort(400, 'Invalid Content-Type')
+
+    title = data.get('title', None)
+    if title == None:
+        json_abort(400, 'Invalid request parameters')
+
+    # 3. calculate the next id
+    id = max([int(t.id) for t in myTasks]+[-1]) + 1
+    newTask = Task(title, list_id, id=str(id), status = Task.NORMAL)
+
+    # 4. append task to array
+    myTasks.append(newTask)
+
+    # 5. return new task
+    return jsonify(newTask.__dict__)
+
 if __name__ == '__main__':
-    app.run(host='localhost', port=20005, debug=True)
+    app.run(host='localhost', port=20006, debug=True)
