@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # coding: utf8
 
-from flask import Flask, send_file
+from flask import Flask, send_file, jsonify
 import sys
 
 from task import Task
 from list import List
+
 
 # allow special characters (e.g. üäö ...)
 reload(sys)
@@ -18,6 +19,8 @@ myTasks = [
     Task('CONQUER THE WORLD!', '0', status = Task.NORMAL)
 ]
 
+api_version = 2.0
+
 # Note: Setting static_url_path to '' has the following effect:
 #   - Whenever a file is requested and there is no matching route defined
 #     the flask server will look whether the file is in the 'static/' folder
@@ -28,6 +31,18 @@ app = Flask(__name__, static_url_path='')
 @app.route('/', methods=['GET'])
 def frontEnd():
     return send_file('static/index.html')
+
+@app.route('/api/version', methods=['GET'])
+def return_api_version():
+    return jsonify({"version": api_version})
+
+@app.route('/api/lists', methods=['GET'])
+def return_lists():
+    return jsonify({"lists": myList.__dict__})
+
+@app.route('/api/lists/:id/tasks', methods=['GET'])
+def return_tasks(id):
+    return jsonify({"tasks": myTasks.__dict__})
 
 if __name__ == '__main__':
     app.run(host='localhost', port=20003, debug=True)
