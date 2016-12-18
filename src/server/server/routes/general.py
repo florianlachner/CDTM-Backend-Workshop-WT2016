@@ -1,3 +1,6 @@
+from flask import send_file, jsonify, app
+
+
 # MARK: Static routes
 @app.route('/', methods=['GET'])
 def frontEnd():

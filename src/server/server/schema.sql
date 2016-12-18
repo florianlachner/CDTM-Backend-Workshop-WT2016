@@ -21,3 +21,5 @@ CREATE TABLE Tasks(
     created     TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(list) REFERENCES Lists(id) ON DELETE CASCADE
 );
+
+INSERT INTO Lists (title, revision, inbox) VALUES ('Inbox', 1, 1);

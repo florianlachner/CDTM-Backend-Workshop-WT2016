@@ -1,8 +1,8 @@
 import os
 
+from src.server import *
+from src.server.server.database import *
 import config
-from src.server.server import *
-from src.server.server.database import init_db
 
 
 def init_app():
