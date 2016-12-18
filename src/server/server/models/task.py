@@ -10,3 +10,19 @@ class Task():
         self.description = description
         self.due = due
         self.revision = revision
+
+    @staticmethod
+    def fromDict(dict):
+        try:
+            task = Task(
+                dict['title'],
+                dict['list'],
+                id=dict['id'],
+                status=dict['status'],
+                description=dict['description'],
+                due=dict['due'],
+                revision=int(dict['revision'])
+            )
+            return task
+        except Exception as e:
+            return None

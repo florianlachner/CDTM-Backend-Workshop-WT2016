@@ -1,14 +1,20 @@
-myLists = [
-    List('Inbox', id='0'),
-    List('Groceries', id='1')
-]
-myTasks = [
-    Task('Think about lunch', '1', id='0', status = Task.COMPLETED),
-    Task('Become a pro in backend development', '0', id='1', status= Task.NORMAL),
-    Task('CONQUER THE WORLD!', '0', id='2', status = Task.NORMAL)
-]
+from flask import jsonify
+
+from src.server.server.utils import list_exists, has_json
+from src.server.server.database import *
+
+#  myLists = [
+#    List('Inbox', id='0'),
+#    List('Groceries', id='1')
+# ]
+# myTasks = [
+#    Task('Think about lunch', '1', id='0', status = Task.COMPLETED),
+#    Task('Become a pro in backend development', '0', id='1', status= Task.NORMAL),
+#    Task('CONQUER THE WORLD!', '0', id='2', status = Task.NORMAL)
+# ]
 
 @app.route('/api/lists/<string:list_id>/tasks', methods=['GET'])
+@list_exists
 def get_tasks(list_id):
     response = {}
     response['tasks'] = [t.__dict__ for t in myTasks if t.list==list_id]
@@ -16,6 +22,8 @@ def get_tasks(list_id):
 
 # CREATE ROUTE
 @app.route('/api/lists/<string:list_id>/tasks', methods=['POST'])
+@list_exists
+@has_json
 def create_task(list_id):
     ''' creates a new task for a list '''
 
@@ -48,6 +56,7 @@ def create_task(list_id):
 
 # DESTROY ROUTE
 @app.route('/api/lists/<string:list_id>/tasks/<string:task_id>', methods=['DELETE'])
+@list_exists
 def remove_task(list_id, task_id):
     # 1. Check whether the specified list exists
     if (len([l for l in myLists if l.id == list_id]) < 1):
@@ -65,6 +74,8 @@ def remove_task(list_id, task_id):
 
 # UPDATE ROUTE
 @app.route('/api/lists/<string:list_id>/tasks/<string:task_id>', methods=['PUT'])
+@list_exists
+@has_json
 def update_task(list_id, task_id):
     # 1. Check whether the specified list exists
     if (len([l for l in myLists if l.id == list_id]) < 1):

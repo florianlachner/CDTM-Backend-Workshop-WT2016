@@ -1,18 +1,15 @@
 from utils import *
 
-from server import app
-from server.models import Task
-
 from utils import *
 
-from server import app
-from server.models import Task
+from src.server.server import app
+from src.server.server.models import Task
 
 
 def db_get_tasks_for_list(list_id):
     ''' Returns all tasks from the database for a given list'''
     query = '''
-
+    SELECT * FROM Tasks WHERE list = ?
     '''
     with app.app_context():
         cur = get_db().cursor()
@@ -27,7 +24,7 @@ def db_get_tasks_for_list(list_id):
 def db_get_task(list_id, task_id):
     ''' Queries the db for a task with the specified id'''
     query = '''
-
+    SELECT * FROM Tasks WHERE list = ? AND id = ?
     '''
 
     with app.app_context():
@@ -40,7 +37,7 @@ def db_get_task(list_id, task_id):
 def db_create_task(list_id, title):
     ''' Inserts a new task and returns it '''
     query = '''
-
+    INSERT INTO Tasks (title, list, status) VALUES (?, ?, 'normal')
     '''
 
     with app.app_context():
@@ -54,7 +51,7 @@ def db_create_task(list_id, title):
 def db_update_task(list_id, task):
     ''' Updates a task and returns it '''
     query = '''
-
+    UPDATE Tasks SET (title, list, status, description, due, revision) VALUES (?, ?, ?, ?, ?, ?)
     '''
 
     with app.app_context():
@@ -68,7 +65,7 @@ def db_update_task(list_id, task):
 def db_delete_task(id):
     ''' Deletes the task with the specified id '''
     query = '''
-
+    DELETE FROM Tasks WHERE id = ?
     '''
 
     with app.app_context():

@@ -22,7 +22,7 @@ def db_list_exists(list_id):
 def db_get_lists():
     ''' Queries the db for all lists'''
     query = '''
-
+    SELECT DISTINCT * FROM Lists
     '''
 
     with app.app_context():
