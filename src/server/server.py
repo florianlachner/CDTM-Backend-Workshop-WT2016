@@ -5,16 +5,16 @@ from flask import Flask, send_file, request, jsonify
 import sys
 
 from utils import json_abort
+from database import *
 
 from task import Task
 from list import List
-from database import *
 
 # allow special characters (e.g. üäö ...)
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-VERSION = 6.0
+VERSION = 7.0
 
 myLists = [
     List('Inbox', id='0'),
