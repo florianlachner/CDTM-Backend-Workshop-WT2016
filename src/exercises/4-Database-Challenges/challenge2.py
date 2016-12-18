@@ -25,8 +25,9 @@ def dict_from_row(row):
 
 # TODO: Insert a new user
 def db_add_user(name):
+    # type: (object) -> object
     # Save your SQL query as a string into the variable query
-    query = ''
+    query = 'INSERT INTO Users (name) VALUES (?)'
 
     db = get_db()
     cur = db.cursor()
@@ -36,7 +37,7 @@ def db_add_user(name):
 # TODO: Insert a new cookie
 def db_add_cookie(user_id, cookie_type):
     # Save your SQL query as a string into the variable query
-    query = ''
+    query = 'INSERT INTO Cookies (owner, type) VALUES (?,?)'
 
     db = get_db()
     cur = db.cursor()
@@ -49,5 +50,11 @@ if __name__ == '__main__':
 
     db_add_user('Michael') # id should be 1
     # TODO: Add another user
+    db_add_user('Tobi') 
+
     db_add_cookie(1, 'Chocolate Cookie')
     # TODO: Add some more cookies
+    db_add_cookie(1, 'Vanillekipferl')
+    db_add_cookie(1, 'Prinzenrolle')
+    db_add_cookie(1, 'Spitzbuben')
+    db_add_cookie(1, 'Nougatkipferl')

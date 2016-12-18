@@ -10,6 +10,6 @@ def hello_world():
 
 if __name__ == '__main__':
     addr = "localhost"         # the same as 127.0.0.1
-    port = 1337                
+    port = 1337
     debug = True               # activates the [1] debugger, [2] automatic reloader
     app.run(host=addr, port=port, debug=debug)

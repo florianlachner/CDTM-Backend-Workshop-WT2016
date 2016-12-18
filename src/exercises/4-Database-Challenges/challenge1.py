@@ -23,6 +23,5 @@ def dict_from_row(row):
     ''' Converts a query result into a dict '''
     return {} if row == None else dict(zip(row.keys(), row))
 
-
 if __name__ == '__main__':
     init_db()
